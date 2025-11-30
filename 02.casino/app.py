@@ -33,7 +33,3 @@ if __name__ == '__main__':
     # 로컬 실행 시
     port = int(os.environ.get('PORT', 3822))
     app.run(debug=True, host='0.0.0.0', port=port)
-else:
-    # Render 등 클라우드 환경에서 실행 시
-    port = int(os.environ.get('PORT', 10000))
-    app.run(debug=False, host='0.0.0.0', port=port)
