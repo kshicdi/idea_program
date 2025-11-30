@@ -1,0 +1,2026 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+.container {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+header {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    backdrop-filter: blur(10px);
+}
+
+header h1 {
+    font-size: 2.5em;
+    margin-bottom: 10px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.subtitle {
+    font-size: 1.2em;
+    opacity: 0.9;
+}
+
+.budget-display-top {
+    margin-top: 15px;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    display: inline-block;
+}
+
+.budget-label {
+    font-size: 1em;
+    margin-right: 10px;
+}
+
+.budget-amount {
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #ffd700;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    width: 100%;
+    margin-top: 15px;
+}
+
+.result-status-top {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    width: 100%;
+    margin-top: 10px;
+}
+
+.result-status-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+    width: 100%;
+}
+
+.result-status-label {
+    font-size: 0.9em;
+    opacity: 0.9;
+    font-weight: bold;
+    min-width: 50px;
+    flex-shrink: 0;
+}
+
+.result-status-value {
+    font-size: 1.2em;
+    font-weight: bold;
+    min-width: 30px;
+    text-align: center;
+    padding: 4px 8px;
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.result-status-value.win {
+    background: rgba(39, 174, 96, 0.8);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.result-status-value.lose {
+    background: rgba(231, 76, 60, 0.8);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.result-status-history {
+    display: flex;
+    gap: 4px;
+    flex-wrap: nowrap;
+    align-items: center;
+    flex: 1;
+    overflow-x: auto;
+    padding: 2px 0;
+    min-width: 0;
+}
+
+.result-status-badge {
+    display: inline-block;
+    font-size: 0.85em;
+    font-weight: bold;
+    padding: 3px 6px;
+    border-radius: 4px;
+    min-width: 24px;
+    text-align: center;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.result-status-badge.win {
+    background: rgba(39, 174, 96, 0.9);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.result-status-badge.lose {
+    background: rgba(231, 76, 60, 0.9);
+    color: white;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.result-status-empty {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9em;
+}
+
+/* 승패 추이 스크롤바 스타일 */
+.result-status-history::-webkit-scrollbar {
+    height: 4px;
+}
+
+.result-status-history::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+}
+
+.result-status-history::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 10px;
+}
+
+.result-status-history::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+}
+
+/* 메인 탭 */
+.main-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    background: white;
+    padding: 10px;
+    border-radius: 15px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+.main-tab-btn {
+    flex: 1;
+    padding: 12px 20px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    font-size: 1em;
+    transition: all 0.3s;
+}
+
+.main-tab-btn:hover {
+    background: #f0f0f0;
+}
+
+.main-tab-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.main-tab-content {
+    display: none;
+}
+
+.main-tab-content.active {
+    display: block;
+}
+
+/* 설정 섹션 */
+.settings-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* 랜덤 섹션 */
+.random-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.random-section h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.random-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.random-buttons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.random-btn {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    flex: 1;
+    min-width: 100px;
+}
+
+.random-btn.start {
+    background: #27ae60;
+    color: white;
+}
+
+.random-btn.start:hover:not(:disabled) {
+    background: #229954;
+    transform: scale(1.05);
+}
+
+.random-btn.stop {
+    background: #e74c3c;
+    color: white;
+}
+
+.random-btn.stop:hover:not(:disabled) {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+.random-btn.reset {
+    background: #95a5a6;
+    color: white;
+}
+
+.random-btn.reset:hover {
+    background: #7f8c8d;
+    transform: scale(1.05);
+}
+
+.random-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.random-info {
+    display: flex;
+    gap: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.random-info p {
+    margin: 0;
+    font-size: 1.1em;
+}
+
+.random-info span {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.2em;
+}
+
+.random-notice {
+    margin-top: 20px;
+    padding: 15px;
+    background: #e3f2fd;
+    border-radius: 10px;
+    border-left: 4px solid #2196F3;
+}
+
+.random-notice p {
+    margin: 5px 0;
+    font-size: 0.9em;
+    color: #1976D2;
+}
+
+.settings-group {
+    margin-bottom: 30px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #e0e0e0;
+}
+
+.settings-group:last-child {
+    border-bottom: none;
+}
+
+.settings-group h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.2em;
+}
+
+.budget-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.budget-section h2 {
+    color: #ff9800;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #ff9800;
+    padding-bottom: 10px;
+}
+
+.budget-controls .input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 15px;
+}
+
+.budget-controls .input-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #ff9800;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.budget-controls .input-group button:hover {
+    background: #fb8c00;
+    transform: scale(1.05);
+}
+
+.budget-info {
+    display: flex;
+    gap: 20px;
+    font-size: 1.1em;
+}
+
+.budget-info span {
+    font-weight: bold;
+    color: #ff9800;
+}
+
+.martingale-info {
+    margin-top: 10px;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.martingale-info p {
+    margin: 5px 0;
+    font-size: 0.95em;
+}
+
+.martingale-info span {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.1em;
+}
+
+.roulette-input-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.roulette-input-section h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.roulette-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.roulette-controls .input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.roulette-controls .input-group label {
+    font-weight: bold;
+    min-width: 150px;
+}
+
+.roulette-controls .input-group input {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.2em;
+    transition: border-color 0.3s;
+    min-width: 200px;
+}
+
+.roulette-controls .input-group input#roulette-number {
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+    min-width: 150px;
+}
+
+.roulette-controls .input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.roulette-controls .input-group select {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.roulette-controls .input-group select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.roulette-controls .input-group button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: #667eea;
+    color: white;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.roulette-controls .input-group button:hover {
+    background: #5568d3;
+    transform: scale(1.05);
+}
+
+.recent-results {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.recent-results h3 {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+#recent-results-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.result-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: white;
+    border-radius: 8px;
+    border-left: 4px solid #667eea;
+}
+
+.result-item.red {
+    border-left-color: #e74c3c;
+}
+
+.result-item.black {
+    border-left-color: #2c3e50;
+}
+
+.result-item.green {
+    border-left-color: #27ae60;
+}
+
+.result-number {
+    font-size: 1.5em;
+    font-weight: bold;
+    min-width: 50px;
+    text-align: center;
+}
+
+.result-info {
+    display: flex;
+    gap: 10px;
+    flex: 1;
+}
+
+.result-info span {
+    padding: 5px 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.result-time {
+    font-size: 0.85em;
+    color: #999;
+}
+
+.game-section {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-bottom: 30px;
+    flex-wrap: nowrap;
+    width: 100%;
+    overflow-x: auto;
+}
+
+.game-type {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.3s ease;
+    flex: 1;
+    min-width: 0;
+}
+
+.game-type:hover {
+    transform: translateY(-5px);
+}
+
+.game-type h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+/* 컴팩트 게임 카드 스타일 */
+.game-type.compact {
+    padding: 15px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    flex: 1;
+    min-width: 0;
+}
+
+.game-type.compact .game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0;
+}
+
+.game-type.compact h2 {
+    margin: 0;
+    font-size: 1.2em;
+    border-bottom: none;
+    padding: 0;
+}
+
+.game-actions {
+    display: flex;
+    gap: 5px;
+}
+
+.icon-btn {
+    padding: 5px 8px;
+    border: none;
+    border-radius: 5px;
+    background: #f0f0f0;
+    cursor: pointer;
+    font-size: 1em;
+    transition: all 0.2s;
+    min-width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.icon-btn:hover {
+    background: #667eea;
+    transform: scale(1.1);
+}
+
+.icon-btn:active {
+    transform: scale(0.95);
+}
+
+.game-compact-controls {
+    margin: 5px 0;
+}
+
+.compact-select {
+    width: 100%;
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9em;
+    background: white;
+}
+
+.compact-select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.betting-info-compact {
+    background: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 2px solid #667eea;
+}
+
+.betting-amount,
+.betting-position {
+    font-size: 0.9em;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.betting-amount span,
+.betting-position span {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.1em;
+}
+
+.queue-list-compact {
+    min-height: 60px;
+    max-height: 120px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 8px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    font-size: 0.85em;
+}
+
+.game-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.input-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.input-group label {
+    font-weight: bold;
+    min-width: 150px;
+}
+
+.input-group input {
+    flex: 1;
+    padding: 10px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1em;
+    transition: border-color 0.3s;
+}
+
+.input-group input:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.queue-section, .betting-section {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 10px;
+    border: 1px solid #e0e0e0;
+}
+
+.queue-section h3, .betting-section h3 {
+    color: #555;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+}
+
+.queue-controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+.position-select {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex: 1;
+    min-width: 150px;
+}
+
+.position-select label {
+    font-weight: bold;
+    font-size: 0.9em;
+    white-space: nowrap;
+}
+
+.position-select select {
+    flex: 1;
+    padding: 8px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 0.9em;
+    transition: border-color 0.3s;
+}
+
+.position-select select:focus {
+    outline: none;
+    border-color: #667eea;
+}
+
+.queue-controls button, .result-controls button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 1em;
+    cursor: pointer;
+    transition: all 0.3s;
+    font-weight: bold;
+}
+
+.queue-controls button {
+    background: #667eea;
+    color: white;
+}
+
+.queue-controls button:hover {
+    background: #5568d3;
+    transform: scale(1.05);
+}
+
+.queue-controls button:last-child {
+    background: #e74c3c;
+}
+
+.queue-controls button:last-child:hover {
+    background: #c0392b;
+}
+
+.queue-list {
+    min-height: 100px;
+    max-height: 200px;
+    overflow-y: auto;
+    background: white;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+}
+
+.queue-item {
+    padding: 8px;
+    margin: 5px 0;
+    background: #e3f2fd;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.queue-item.selected {
+    background: #667eea;
+    color: white;
+    font-weight: bold;
+}
+
+.betting-info {
+    background: white;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    border: 2px solid #667eea;
+}
+
+.betting-info p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+.betting-info span {
+    font-weight: bold;
+    color: #667eea;
+    font-size: 1.2em;
+}
+
+.result-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.result-controls button {
+    flex: 1;
+    padding: 12px;
+}
+
+.result-controls button:first-child {
+    background: #27ae60;
+    color: white;
+}
+
+.result-controls button:first-child:hover {
+    background: #229954;
+}
+
+.result-controls button:nth-child(2) {
+    background: #e74c3c;
+    color: white;
+}
+
+.result-controls button:nth-child(2):hover {
+    background: #c0392b;
+}
+
+.result-controls button:last-child {
+    background: #95a5a6;
+    color: white;
+}
+
+.result-controls button:last-child:hover {
+    background: #7f8c8d;
+}
+
+.auto-notice {
+    margin-top: 15px;
+    padding: 10px;
+    background: #e3f2fd;
+    border-radius: 8px;
+    border-left: 4px solid #2196F3;
+}
+
+.auto-notice p {
+    margin: 0;
+    font-size: 0.9em;
+    color: #1976D2;
+    font-style: italic;
+}
+
+.history-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.history-section h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.5em;
+    border-bottom: 2px solid #667eea;
+    padding-bottom: 10px;
+}
+
+.history-tabs {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.tab-btn {
+    padding: 10px 20px;
+    border: 2px solid #667eea;
+    background: white;
+    color: #667eea;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: all 0.3s;
+}
+
+.tab-btn:hover {
+    background: #f0f0f0;
+}
+
+.tab-btn.active {
+    background: #667eea;
+    color: white;
+}
+
+.history-tabs::-webkit-scrollbar {
+    height: 6px;
+}
+
+.history-tabs::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 10px;
+}
+
+.history-content {
+    min-height: 200px;
+    max-height: 400px;
+    overflow-y: auto;
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+}
+
+.history-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: white;
+    border-radius: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-left: 4px solid #667eea;
+}
+
+.history-item.win {
+    border-left-color: #27ae60;
+}
+
+.history-item.lose {
+    border-left-color: #e74c3c;
+}
+
+.history-item-info {
+    display: flex;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.history-item-info span {
+    padding: 5px 10px;
+    background: #f0f0f0;
+    border-radius: 5px;
+    font-size: 0.9em;
+}
+
+.empty-queue, .empty-history {
+    text-align: center;
+    color: #999;
+    padding: 40px;
+    font-style: italic;
+}
+
+/* 스크롤바 스타일 */
+.queue-list::-webkit-scrollbar,
+.history-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.queue-list::-webkit-scrollbar-track,
+.history-content::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+.queue-list::-webkit-scrollbar-thumb,
+.history-content::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+}
+
+.queue-list::-webkit-scrollbar-thumb:hover,
+.history-content::-webkit-scrollbar-thumb:hover {
+    background: #555;
+}
+
+@media (max-width: 768px) {
+    body {
+        padding: 10px;
+    }
+
+    .container {
+        max-width: 100%;
+    }
+
+    .game-section {
+        flex-wrap: nowrap;
+        gap: 10px;
+    }
+    
+    .game-section .game-type.compact {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+    }
+    
+    .game-type.compact {
+        padding: 10px;
+    }
+    
+    .game-type.compact h2 {
+        font-size: 1em;
+    }
+    
+    .icon-btn {
+        padding: 4px 6px;
+        font-size: 0.9em;
+        min-width: 28px;
+        height: 28px;
+    }
+    
+    .betting-info-compact {
+        padding: 8px;
+        font-size: 0.85em;
+    }
+    
+    .queue-list-compact {
+        min-height: 50px;
+        max-height: 80px;
+        font-size: 0.8em;
+    }
+    
+    header h1 {
+        font-size: 2em;
+    }
+    
+    .roulette-controls .input-group,
+    .input-group {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .input-group label {
+        min-width: auto;
+    }
+    
+    .main-tabs {
+        flex-direction: row;
+        gap: 5px;
+        padding: 8px;
+    }
+    
+    .main-tab-btn {
+        flex: 1;
+        padding: 10px 8px;
+        font-size: 0.9em;
+        white-space: nowrap;
+        min-width: 0;
+    }
+    
+    .header-info {
+        gap: 8px;
+    }
+    
+    .budget-display-top {
+        display: block;
+        text-align: center;
+        margin-top: 0;
+        padding: 8px 15px;
+    }
+    
+    .budget-amount {
+        font-size: 1.3em;
+    }
+    
+    .result-status-top {
+        gap: 6px;
+        width: 100%;
+    }
+    
+    .result-status-row {
+        padding: 6px 10px;
+        gap: 8px;
+    }
+    
+    .result-status-label {
+        font-size: 0.85em;
+        min-width: 40px;
+    }
+    
+    .result-status-history {
+        gap: 3px;
+    }
+    
+    .result-status-badge {
+        font-size: 0.75em;
+        padding: 2px 5px;
+        min-width: 20px;
+    }
+
+    .budget-controls .input-group {
+        align-items: stretch;
+    }
+
+    .budget-controls .input-group button {
+        width: 100%;
+    }
+
+    .queue-controls {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .position-select {
+        width: 100%;
+    }
+
+    .queue-controls button {
+        width: 100%;
+    }
+
+    .result-controls {
+        flex-direction: column;
+    }
+
+    .result-controls button {
+        width: 100%;
+    }
+
+    .betting-info span {
+        font-size: 1em;
+    }
+
+    .history-tabs {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+    }
+
+    .tab-btn {
+        flex: 1 0 auto;
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 480px) {
+    header h1 {
+        font-size: 1.6em;
+    }
+
+    .subtitle {
+        font-size: 1em;
+    }
+
+    .roulette-input-section,
+    .budget-section,
+    .game-type,
+    .history-section {
+        padding: 18px;
+    }
+
+    .queue-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .result-item {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 6px;
+    }
+
+    .result-info {
+        flex-wrap: wrap;
+    }
+
+    .auto-notice p {
+        font-size: 0.85em;
+    }
+}
+
+/* 모바일 고정 입력창 */
+.mobile-input-fixed {
+    display: none;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: white;
+    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.2);
+    z-index: 1000;
+    padding: 15px;
+    border-top: 2px solid #667eea;
+}
+
+.mobile-input-container {
+    max-width: 100%;
+}
+
+.mobile-input-row {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.mobile-number-input {
+    flex: 1;
+    padding: 15px;
+    border: 2px solid #667eea;
+    border-radius: 8px;
+    font-size: 1.5em;
+    font-weight: bold;
+    text-align: center;
+    /* 모바일에서 키보드가 올라오지 않도록 */
+    -webkit-user-select: none;
+    user-select: none;
+    /* iOS에서 줌 방지 */
+    font-size: 16px;
+}
+
+/* 모바일에서 입력 필드 포커스 시 키보드 방지 */
+@media (max-width: 768px) {
+    .mobile-number-input:focus {
+        outline: none;
+    }
+    
+    /* 빠른 숫자 버튼 클릭 시 키보드가 올라오지 않도록 */
+    .mobile-number-input[readonly] {
+        cursor: pointer;
+    }
+}
+
+.mobile-submit-btn {
+    padding: 15px 20px;
+    background: #667eea;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.mobile-submit-btn:active {
+    background: #5568d3;
+    transform: scale(0.95);
+}
+
+.mobile-cancel-btn {
+    padding: 15px 20px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.mobile-cancel-btn:active {
+    background: #c0392b;
+    transform: scale(0.95);
+}
+
+.mobile-cancel-btn:disabled {
+    background: #95a5a6;
+    cursor: not-allowed;
+    opacity: 0.6;
+}
+
+.mobile-backspace-btn {
+    padding: 15px 20px;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+.mobile-backspace-btn:active {
+    background: #e67e22;
+    transform: scale(0.95);
+}
+
+.mobile-quick-numbers {
+    display: flex;
+    gap: 5px;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.quick-btn {
+    flex: 1;
+    min-width: 30px;
+    max-width: 50px;
+    padding: 10px;
+    background: #f0f0f0;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    /* 터치 이벤트 최적화 */
+    touch-action: manipulation;
+    -webkit-tap-highlight-color: transparent;
+}
+
+.quick-btn:active {
+    background: #667eea;
+    color: white;
+    transform: scale(0.9);
+}
+
+/* 모바일 고정 배팅 정보 */
+.mobile-betting-fixed {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(102, 126, 234, 0.95);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 10px 15px;
+    z-index: 999;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.mobile-betting-info {
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    max-width: 100%;
+    overflow-x: auto;
+}
+
+.mobile-betting-item {
+    flex: 1;
+    text-align: center;
+    min-width: 80px;
+}
+
+.mobile-betting-label {
+    display: block;
+    font-size: 0.8em;
+    opacity: 0.9;
+    margin-bottom: 3px;
+}
+
+.mobile-betting-value {
+    display: block;
+    font-size: 0.9em;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 모바일에서만 표시 */
+@media (max-width: 768px) {
+    .mobile-input-fixed {
+        display: block;
+    }
+    
+    .mobile-betting-fixed {
+        display: block;
+    }
+    
+    /* 하단 고정 입력창 때문에 하단 여백 추가 */
+    body {
+        padding-bottom: 150px;
+    }
+    
+    /* 상단 고정 배팅 정보 때문에 상단 여백 추가 */
+    .container {
+        padding-top: 70px;
+    }
+    
+    /* 데스크톱 결과 입력 섹션 숨기기 (선택사항) */
+    .roulette-input-section {
+        display: none;
+    }
+}
+
+@media (max-width: 480px) {
+    .header-info {
+        gap: 5px;
+    }
+    
+    .budget-display-top {
+        padding: 6px 10px;
+    }
+    
+    .budget-amount {
+        font-size: 1.1em;
+    }
+    
+    .result-status-top {
+        gap: 4px;
+    }
+    
+    .result-status-row {
+        padding: 5px 8px;
+        gap: 6px;
+    }
+    
+    .result-status-label {
+        font-size: 0.75em;
+        min-width: 35px;
+    }
+    
+    .result-status-history {
+        gap: 2px;
+    }
+    
+    .result-status-badge {
+        font-size: 0.7em;
+        padding: 2px 4px;
+        min-width: 18px;
+    }
+    
+    .main-tabs {
+        gap: 3px;
+        padding: 5px;
+    }
+    
+    .main-tab-btn {
+        padding: 8px 5px;
+        font-size: 0.8em;
+    }
+    
+    .game-section {
+        flex-wrap: nowrap;
+        gap: 5px;
+    }
+    
+    .game-section .game-type.compact {
+        flex: 1;
+        min-width: 0;
+        max-width: 100%;
+    }
+    
+    .game-type.compact {
+        padding: 8px;
+    }
+    
+    .game-type.compact h2 {
+        font-size: 0.9em;
+    }
+    
+    .icon-btn {
+        padding: 3px 5px;
+        font-size: 0.8em;
+        min-width: 24px;
+        height: 24px;
+    }
+    
+    .compact-select {
+        padding: 6px;
+        font-size: 0.8em;
+    }
+    
+    .betting-info-compact {
+        padding: 6px;
+        font-size: 0.75em;
+    }
+    
+    .betting-amount span,
+    .betting-position span {
+        font-size: 1em;
+    }
+    
+    .queue-list-compact {
+        min-height: 40px;
+        max-height: 60px;
+        font-size: 0.7em;
+        padding: 5px;
+    }
+    
+    .mobile-input-row {
+        flex-wrap: nowrap;
+        gap: 5px;
+    }
+    
+    .mobile-number-input {
+        flex: 1;
+        min-width: 0;
+        padding: 12px;
+        font-size: 1.3em;
+    }
+    
+    .mobile-submit-btn,
+    .mobile-cancel-btn,
+    .mobile-backspace-btn {
+        padding: 12px 15px;
+        font-size: 1em;
+        white-space: nowrap;
+        flex-shrink: 0;
+    }
+    
+    .mobile-betting-info {
+        font-size: 0.85em;
+    }
+    
+    .mobile-betting-value {
+        font-size: 0.8em;
+    }
+}
+
+/* 숫자 배팅 섹션 */
+.number-betting-section {
+    background: white;
+    border-radius: 15px;
+    padding: 25px;
+    margin-bottom: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+.number-betting-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #667eea;
+}
+
+.number-betting-header h2 {
+    color: #667eea;
+    margin: 0;
+    font-size: 1.5em;
+}
+
+.number-betting-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.number-betting-btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.number-betting-btn.start {
+    background: #27ae60;
+    color: white;
+}
+
+.number-betting-btn.start:hover {
+    background: #229954;
+    transform: scale(1.05);
+}
+
+.number-betting-btn.clear {
+    background: #f39c12;
+    color: white;
+}
+
+.number-betting-btn.clear:hover {
+    background: #e67e22;
+    transform: scale(1.05);
+}
+
+.number-betting-btn.reset {
+    background: #e74c3c;
+    color: white;
+}
+
+.number-betting-btn.reset:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+.number-betting-info {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 15px;
+    background: #f8f9fa;
+    border-radius: 10px;
+    flex-wrap: wrap;
+}
+
+.betting-info-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.betting-info-item.full-width {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.betting-amount-controls {
+    display: flex;
+    gap: 5px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.amount-btn {
+    padding: 8px 12px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    min-width: 45px;
+}
+
+.amount-btn.plus {
+    background: #27ae60;
+    color: white;
+    border-color: #229954;
+}
+
+.amount-btn.plus:hover {
+    background: #229954;
+    transform: scale(1.05);
+}
+
+.amount-btn.minus {
+    background: #e74c3c;
+    color: white;
+    border-color: #c0392b;
+}
+
+.amount-btn.minus:hover {
+    background: #c0392b;
+    transform: scale(1.05);
+}
+
+.bet-amount-input {
+    padding: 8px 12px;
+    border: 2px solid #667eea;
+    border-radius: 6px;
+    font-size: 1em;
+    font-weight: bold;
+    text-align: center;
+    min-width: 80px;
+    max-width: 120px;
+}
+
+.bet-amount-input:focus {
+    outline: none;
+    border-color: #5568d3;
+    box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+}
+
+.betting-label {
+    font-weight: bold;
+    color: #555;
+}
+
+.betting-value {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: #667eea;
+}
+
+.betting-value.odds {
+    color: #f39c12;
+}
+
+/* 룰렛 그리드 */
+.roulette-grid-container {
+    margin: 20px 0;
+    padding: 20px;
+    background: #f8f9fa;
+    border-radius: 15px;
+    border: 2px solid #e0e0e0;
+}
+
+.roulette-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+    gap: 10px;
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.roulette-number-btn {
+    aspect-ratio: 1;
+    min-width: 50px;
+    min-height: 50px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.2em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: white;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.roulette-number-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 1;
+}
+
+.roulette-number-btn.red {
+    background: #e74c3c;
+    color: white;
+    border-color: #c0392b;
+}
+
+.roulette-number-btn.black {
+    background: #2c3e50;
+    color: white;
+    border-color: #1a252f;
+}
+
+.roulette-number-btn.green {
+    background: #27ae60;
+    color: white;
+    border-color: #229954;
+}
+
+.roulette-number-btn.selected {
+    border: 4px solid #f39c12;
+    box-shadow: 0 0 15px rgba(243, 156, 18, 0.6);
+    transform: scale(1.15);
+    z-index: 2;
+}
+
+.roulette-number-btn.selected::after {
+    content: '✓';
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: #f39c12;
+    color: white;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.8em;
+    font-weight: bold;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.number-betting-queue {
+    margin-top: 20px;
+    min-height: 60px;
+}
+
+/* 모바일 반응형 */
+@media (max-width: 768px) {
+    .number-betting-header {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+    }
+    
+    .number-betting-actions {
+        width: 100%;
+        flex-direction: column;
+    }
+    
+    .number-betting-btn {
+        width: 100%;
+    }
+    
+    .number-betting-info {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .roulette-grid {
+        grid-template-columns: repeat(auto-fit, minmax(45px, 1fr));
+        gap: 8px;
+    }
+    
+    .roulette-number-btn {
+        min-width: 40px;
+        min-height: 40px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .roulette-grid {
+        grid-template-columns: repeat(auto-fit, minmax(40px, 1fr));
+        gap: 6px;
+    }
+    
+    .roulette-number-btn {
+        min-width: 35px;
+        min-height: 35px;
+        font-size: 0.9em;
+    }
+    
+    .number-betting-header h2 {
+        font-size: 1.2em;
+    }
+}
+
+/* 추천 버튼 및 표시 */
+.recommend-btn {
+    padding: 6px 12px;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    font-size: 0.85em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 5px;
+    width: 100%;
+}
+
+.recommend-btn:hover {
+    background: #e67e22;
+    transform: scale(1.05);
+}
+
+.recommend-btn-number {
+    padding: 8px 15px;
+    background: #f39c12;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.recommend-btn-number:hover {
+    background: #e67e22;
+    transform: scale(1.05);
+}
+
+.recommendation-display {
+    margin: 10px 0;
+    padding: 10px;
+    background: #fff3cd;
+    border-radius: 8px;
+    border-left: 4px solid #f39c12;
+    font-size: 0.85em;
+    display: none;
+}
+
+.recommendation-display:not(:empty) {
+    display: block;
+}
+
+.recommendation-item {
+    color: #856404;
+}
+
+.recommendation-title {
+    font-weight: bold;
+    margin-bottom: 5px;
+    font-size: 1em;
+}
+
+.recommendation-reason {
+    font-size: 0.9em;
+    opacity: 0.9;
+    margin-bottom: 10px;
+}
+
+.recommended-numbers-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.recommended-number-btn {
+    aspect-ratio: 1;
+    min-width: 45px;
+    min-height: 45px;
+    border: 2px solid #ddd;
+    border-radius: 8px;
+    font-size: 1.1em;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+}
+
+.recommended-number-btn.red {
+    background: #e74c3c;
+    border-color: #c0392b;
+}
+
+.recommended-number-btn.black {
+    background: #2c3e50;
+    border-color: #1a252f;
+}
+
+.recommended-number-btn.green {
+    background: #27ae60;
+    border-color: #229954;
+}
+
+.recommended-number-btn:hover {
+    transform: scale(1.1);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.recommended-number-btn.selected-recommended {
+    border: 3px solid #f39c12;
+    box-shadow: 0 0 15px rgba(243, 156, 18, 0.8);
+    transform: scale(1.15);
+}
+
+.game-compact-controls {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+@media (max-width: 768px) {
+    .recommended-numbers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(40px, 1fr));
+        gap: 6px;
+    }
+    
+    .recommended-number-btn {
+        min-width: 35px;
+        min-height: 35px;
+        font-size: 1em;
+    }
+}
+
+@media (max-width: 480px) {
+    .recommended-numbers-grid {
+        grid-template-columns: repeat(auto-fill, minmax(35px, 1fr));
+        gap: 5px;
+    }
+    
+    .recommended-number-btn {
+        min-width: 30px;
+        min-height: 30px;
+        font-size: 0.9em;
+    }
+}
+

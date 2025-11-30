@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>카지노 룰렛 게임 - 마틴게일 배팅 계산기</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎰 카지노 룰렛 게임</h1>
+            <p class="subtitle">마틴게일 배팅 계산기</p>
+            <div class="header-info">
+                <div class="budget-display-top">
+                    <span class="budget-label">남은 예산:</span>
+                    <span class="budget-amount" id="budget-remaining-top">0</span>
+                </div>
+                <div class="result-status-top">
+                    <div class="result-status-row">
+                        <span class="result-status-label">대소:</span>
+                        <div class="result-status-history" id="result-status-highlow"></div>
+                    </div>
+                    <div class="result-status-row">
+                        <span class="result-status-label">색:</span>
+                        <div class="result-status-history" id="result-status-color"></div>
+                    </div>
+                    <div class="result-status-row">
+                        <span class="result-status-label">홀짝:</span>
+                        <div class="result-status-history" id="result-status-oddeven"></div>
+                    </div>
+                    <div class="result-status-row">
+                        <span class="result-status-label">숫자:</span>
+                        <div class="result-status-history" id="result-status-number"></div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- 메인 탭 -->
+        <div class="main-tabs">
+            <button class="main-tab-btn active" onclick="showMainTab('game')">🎮 게임</button>
+            <button class="main-tab-btn" onclick="showMainTab('settings')">⚙️ 설정</button>
+            <button class="main-tab-btn" onclick="showMainTab('history')">📜 히스토리</button>
+            <button class="main-tab-btn" onclick="showMainTab('random')">🎲 랜덤</button>
+        </div>
+
+        <!-- 게임 탭 -->
+        <div class="main-tab-content active" id="tab-game">
+        <div class="roulette-input-section">
+            <h2>🎯 룰렛 결과 입력</h2>
+            <div class="roulette-controls">
+                <div class="input-group">
+                    <label>룰렛 타입:</label>
+                    <select id="roulette-type" onchange="changeRouletteType()">
+                        <option value="european">유럽식 (0 하나)</option>
+                        <option value="american">미국식 (0, 00)</option>
+                    </select>
+                </div>
+                <div class="input-group">
+                    <label>결과 숫자 입력:</label>
+                    <input type="number" id="roulette-number" min="0" max="36" placeholder="0-36">
+                    <button onclick="inputRouletteResult()">결과 입력</button>
+                </div>
+                <div class="recent-results">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                        <h3 style="margin: 0;">최근 결과</h3>
+                        <button onclick="undoLastResult()" id="undo-btn" style="padding: 8px 15px; background: #e74c3c; color: white; border: none; border-radius: 5px; cursor: pointer; font-size: 0.9em;" disabled>마지막 결과 취소</button>
+                    </div>
+                    <div id="recent-results-list"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="game-section">
+            <div class="game-type compact" id="game-highlow">
+                <div class="game-header">
+                    <h2>📊 대소</h2>
+                    <div class="game-actions">
+                        <button onclick="addToQueue('highlow')" class="icon-btn" title="배팅 시작">▶️</button>
+                        <button onclick="clearQueue('highlow')" class="icon-btn" title="초기화">🔄</button>
+                        <button onclick="resetGame('highlow')" class="icon-btn" title="리셋">🗑️</button>
+                    </div>
+                </div>
+                <div class="game-compact-controls">
+                    <select id="highlow-position-select" class="compact-select">
+                        <option value="대(19-36)">대(19-36)</option>
+                        <option value="소(1-18)">소(1-18)</option>
+                    </select>
+                    <button onclick="getRecommendation('highlow')" class="recommend-btn" title="추천">💡 추천</button>
+                </div>
+                <div class="recommendation-display" id="highlow-recommendation"></div>
+                <div class="betting-info-compact" id="highlow-betting">
+                    <div class="betting-amount">💰 <span id="highlow-amount">5</span></div>
+                    <div class="betting-position">📍 <span id="highlow-position">-</span></div>
+                </div>
+                <div class="queue-list-compact" id="highlow-queue"></div>
+            </div>
+
+            <div class="game-type compact" id="game-color">
+                <div class="game-header">
+                    <h2>🎨 색</h2>
+                    <div class="game-actions">
+                        <button onclick="addToQueue('color')" class="icon-btn" title="배팅 시작">▶️</button>
+                        <button onclick="clearQueue('color')" class="icon-btn" title="초기화">🔄</button>
+                        <button onclick="resetGame('color')" class="icon-btn" title="리셋">🗑️</button>
+                    </div>
+                </div>
+                <div class="game-compact-controls">
+                    <select id="color-position-select" class="compact-select">
+                        <option value="블랙">블랙</option>
+                        <option value="레드">레드</option>
+                    </select>
+                    <button onclick="getRecommendation('color')" class="recommend-btn" title="추천">💡 추천</button>
+                </div>
+                <div class="recommendation-display" id="color-recommendation"></div>
+                <div class="betting-info-compact" id="color-betting">
+                    <div class="betting-amount">💰 <span id="color-amount">5</span></div>
+                    <div class="betting-position">📍 <span id="color-position">-</span></div>
+                </div>
+                <div class="queue-list-compact" id="color-queue"></div>
+            </div>
+
+            <div class="game-type compact" id="game-oddeven">
+                <div class="game-header">
+                    <h2>🔢 홀짝</h2>
+                    <div class="game-actions">
+                        <button onclick="addToQueue('oddeven')" class="icon-btn" title="배팅 시작">▶️</button>
+                        <button onclick="clearQueue('oddeven')" class="icon-btn" title="초기화">🔄</button>
+                        <button onclick="resetGame('oddeven')" class="icon-btn" title="리셋">🗑️</button>
+                    </div>
+                </div>
+                <div class="game-compact-controls">
+                    <select id="oddeven-position-select" class="compact-select">
+                        <option value="홀">홀</option>
+                        <option value="짝">짝</option>
+                    </select>
+                    <button onclick="getRecommendation('oddeven')" class="recommend-btn" title="추천">💡 추천</button>
+                </div>
+                <div class="recommendation-display" id="oddeven-recommendation"></div>
+                <div class="betting-info-compact" id="oddeven-betting">
+                    <div class="betting-amount">💰 <span id="oddeven-amount">5</span></div>
+                    <div class="betting-position">📍 <span id="oddeven-position">-</span></div>
+                </div>
+                <div class="queue-list-compact" id="oddeven-queue"></div>
+            </div>
+
+        </div>
+
+        <!-- 숫자 배팅 섹션 (룰렛 이미지) -->
+        <div class="number-betting-section">
+            <div class="number-betting-header">
+                <h2>🎯 숫자 배팅</h2>
+                <div class="number-betting-actions">
+                    <button onclick="addToQueue('number')" class="number-betting-btn start" title="배팅 시작">▶️ 배팅 시작</button>
+                    <button onclick="clearQueue('number')" class="number-betting-btn clear" title="초기화">🔄 초기화</button>
+                    <button onclick="resetGame('number')" class="number-betting-btn reset" title="리셋">🗑️ 리셋</button>
+                </div>
+            </div>
+            
+            <div class="number-betting-info">
+                <div class="betting-info-item">
+                    <span class="betting-label">선택한 숫자:</span>
+                    <span class="betting-value" id="number-position-display">-</span>
+                </div>
+                <div class="betting-info-item full-width">
+                    <span class="betting-label">배팅 금액:</span>
+                    <div class="betting-amount-controls">
+                        <button onclick="adjustNumberBetAmount(-10)" class="amount-btn minus">-10</button>
+                        <button onclick="adjustNumberBetAmount(-5)" class="amount-btn minus">-5</button>
+                        <button onclick="adjustNumberBetAmount(-1)" class="amount-btn minus">-1</button>
+                        <input type="number" id="number-bet-amount-input" value="1" min="1" class="bet-amount-input" onchange="setNumberBetAmount()">
+                        <button onclick="adjustNumberBetAmount(1)" class="amount-btn plus">+1</button>
+                        <button onclick="adjustNumberBetAmount(5)" class="amount-btn plus">+5</button>
+                        <button onclick="adjustNumberBetAmount(10)" class="amount-btn plus">+10</button>
+                    </div>
+                </div>
+                <div class="betting-info-item">
+                    <span class="betting-label">배당:</span>
+                    <span class="betting-value odds">35:1</span>
+                </div>
+                <div class="betting-info-item">
+                    <button onclick="getRecommendation('number')" class="recommend-btn-number" title="추천">💡 추천</button>
+                </div>
+            </div>
+            <div class="recommendation-display" id="number-recommendation"></div>
+
+            <!-- 룰렛 그리드 -->
+            <div class="roulette-grid-container">
+                <div class="roulette-grid" id="roulette-grid">
+                    <!-- 숫자들이 동적으로 생성됨 -->
+                </div>
+            </div>
+
+            <div class="number-betting-queue" id="number-queue"></div>
+            
+            <!-- 숨겨진 입력 필드 (기존 코드 호환성) -->
+            <input type="number" id="number-position-select" style="display: none;">
+        </div>
+        </div>
+
+        <!-- 설정 탭 -->
+        <div class="main-tab-content" id="tab-settings">
+            <div class="settings-section">
+                <h2>⚙️ 게임 설정</h2>
+                
+                <div class="settings-group">
+                    <h3>💰 예산 설정</h3>
+                    <div class="input-group">
+                        <label>예산 입력:</label>
+                        <input type="number" id="budget-input" min="0" value="1000" placeholder="예: 1000">
+                        <button onclick="setBudget()">예산 설정</button>
+                        <button onclick="resetBudget()">예산 초기화</button>
+                    </div>
+                    <div class="budget-info">
+                        <p>총 예산: <span id="budget-total">0</span></p>
+                        <p>남은 예산: <span id="budget-remaining">0</span></p>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>🎯 룰렛 타입</h3>
+                    <div class="input-group">
+                        <label>룰렛 타입:</label>
+                        <select id="settings-roulette-type" onchange="changeRouletteType()">
+                            <option value="european">유럽식 (0 하나)</option>
+                            <option value="american">미국식 (0, 00)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>💵 초기 배팅 금액</h3>
+                    <div class="input-group">
+                        <label>대소 게임:</label>
+                        <input type="number" id="highlow-initial" value="5" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>블랙/레드 게임:</label>
+                        <input type="number" id="color-initial" value="5" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>홀짝 게임:</label>
+                        <input type="number" id="oddeven-initial" value="5" min="1">
+                    </div>
+                    <div class="input-group">
+                        <label>숫자 게임:</label>
+                        <input type="number" id="number-initial" value="1" min="1">
+                    </div>
+                </div>
+
+                <div class="settings-group">
+                    <h3>📈 마틴게일 최대값 설정</h3>
+                    
+                    <!-- 추천 섹션 -->
+                    <div class="martingale-recommendation" style="background: #f0f7ff; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #b3d9ff;">
+                        <h4 style="margin-top: 0; color: #0066cc;">💡 최적값 추천</h4>
+                        <div style="margin-bottom: 10px; padding: 8px; background: white; border-radius: 5px;">
+                            <div><strong>사용 예산:</strong> <span id="recommend-budget-display">0</span>원</div>
+                            <div style="font-size: 0.9em; color: #666; margin-top: 5px;">위의 예산 설정에서 입력한 값이 사용됩니다.</div>
+                        </div>
+                        <div class="input-group" style="margin-bottom: 10px;">
+                            <label>게임 시간:</label>
+                            <input type="number" id="recommend-hours" min="0.5" max="24" step="0.5" value="1" placeholder="예: 1" style="width: 120px;">
+                            <span style="margin: 0 10px;">시간</span>
+                            <button onclick="recommendMartingaleMax()" style="padding: 8px 15px; background: #0066cc; color: white; border: none; border-radius: 5px; cursor: pointer;">추천 받기</button>
+                        </div>
+                        <div id="martingale-recommendation-result" style="margin-top: 10px; padding: 10px; background: white; border-radius: 5px; display: none;">
+                            <!-- 추천 결과가 여기에 표시됨 -->
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <label>연속 패배 횟수 제한:</label>
+                        <select id="martingale-max-losses">
+                            <option value="3">패배 3회 이상 (최소 5원 기준 → 최대 40원)</option>
+                            <option value="4" selected>패배 4회 이상 (최소 5원 기준 → 최대 80원)</option>
+                            <option value="5">패배 5회 이상 (최소 5원 기준 → 최대 160원)</option>
+                            <option value="6">패배 6회 이상 (최소 5원 기준 → 최대 320원)</option>
+                            <option value="7">패배 7회 이상 (최소 5원 기준 → 최대 640원)</option>
+                            <option value="8">패배 8회 이상 (최소 5원 기준 → 최대 1,280원)</option>
+                            <option value="9">패배 9회 이상 (최소 5원 기준 → 최대 2,560원)</option>
+                            <option value="10">패배 10회 이상 (최소 5원 기준 → 최대 5,120원)</option>
+                            <option value="0">제한 없음</option>
+                        </select>
+                        <button onclick="setMartingaleMax()">설정 적용</button>
+                    </div>
+                    <div class="martingale-info">
+                        <p>현재 설정: 연속 패배 <span id="martingale-max-display">4</span>회 이상 시 초기 금액으로 리셋</p>
+                        <p style="font-size: 0.9em; color: #666;" id="martingale-max-amount-info">최소 배팅 금액 5원 기준 최대 배팅 금액: 80원</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 히스토리 탭 -->
+        <div class="main-tab-content" id="tab-history">
+            <div class="history-section">
+                <h2>📜 배팅 히스토리</h2>
+                <div class="history-tabs">
+                    <button class="tab-btn active" onclick="showHistory('highlow')">대소</button>
+                    <button class="tab-btn" onclick="showHistory('color')">블랙/레드</button>
+                    <button class="tab-btn" onclick="showHistory('oddeven')">홀짝</button>
+                    <button class="tab-btn" onclick="showHistory('number')">숫자</button>
+                </div>
+                <div class="history-content" id="history-content"></div>
+            </div>
+        </div>
+
+        <!-- 랜덤 탭 -->
+        <div class="main-tab-content" id="tab-random">
+            <div class="random-section">
+                <h2>🎲 랜덤 시뮬레이션</h2>
+                <div class="random-controls">
+                    <div class="input-group">
+                        <label>속도 (초):</label>
+                        <input type="number" id="random-speed" value="1" min="0.1" max="5" step="0.1">
+                    </div>
+                    <div class="random-buttons">
+                        <button onclick="startRandom()" id="random-start-btn" class="random-btn start">시작</button>
+                        <button onclick="stopRandom()" id="random-stop-btn" class="random-btn stop" disabled>정지</button>
+                        <button onclick="resetAllGames()" class="random-btn reset">전체 리셋</button>
+                    </div>
+                    <div class="random-info">
+                        <p>실행 횟수: <span id="random-count">0</span></p>
+                        <p>현재 숫자: <span id="random-current">-</span></p>
+                    </div>
+                </div>
+                <div class="random-notice">
+                    <p>💡 랜덤 시뮬레이션을 시작하면 자동으로 룰렛 숫자가 생성되어 결과가 처리됩니다.</p>
+                    <p>⚠️ 게임을 시작한 후에 시뮬레이션을 실행하세요.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모바일용 하단 고정 결과 입력 -->
+    <div class="mobile-input-fixed" id="mobile-input-fixed">
+        <div class="mobile-input-container">
+            <div class="mobile-input-row">
+                <input type="number" id="mobile-roulette-number" min="0" max="36" placeholder="0-36" class="mobile-number-input">
+                <button onclick="backspaceNumber()" class="mobile-backspace-btn" title="백스페이스">⌫</button>
+                <button onclick="inputRouletteResultMobile()" class="mobile-submit-btn">입력</button>
+                <button onclick="undoLastResult()" id="mobile-undo-btn" class="mobile-cancel-btn" disabled>취소</button>
+            </div>
+            <div class="mobile-quick-numbers">
+                <button type="button" onclick="setQuickNumber(0, event)" class="quick-btn">0</button>
+                <button type="button" onclick="setQuickNumber(1, event)" class="quick-btn">1</button>
+                <button type="button" onclick="setQuickNumber(2, event)" class="quick-btn">2</button>
+                <button type="button" onclick="setQuickNumber(3, event)" class="quick-btn">3</button>
+                <button type="button" onclick="setQuickNumber(4, event)" class="quick-btn">4</button>
+                <button type="button" onclick="setQuickNumber(5, event)" class="quick-btn">5</button>
+                <button type="button" onclick="setQuickNumber(6, event)" class="quick-btn">6</button>
+                <button type="button" onclick="setQuickNumber(7, event)" class="quick-btn">7</button>
+                <button type="button" onclick="setQuickNumber(8, event)" class="quick-btn">8</button>
+                <button type="button" onclick="setQuickNumber(9, event)" class="quick-btn">9</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 모바일용 상단 고정 배팅 정보 -->
+    <div class="mobile-betting-fixed" id="mobile-betting-fixed">
+        <div class="mobile-betting-info" id="mobile-betting-info">
+            <div class="mobile-betting-item" id="mobile-betting-highlow">
+                <span class="mobile-betting-label">대소:</span>
+                <span class="mobile-betting-value">-</span>
+            </div>
+            <div class="mobile-betting-item" id="mobile-betting-color">
+                <span class="mobile-betting-label">색:</span>
+                <span class="mobile-betting-value">-</span>
+            </div>
+            <div class="mobile-betting-item" id="mobile-betting-oddeven">
+                <span class="mobile-betting-label">홀짝:</span>
+                <span class="mobile-betting-value">-</span>
+            </div>
+            <div class="mobile-betting-item" id="mobile-betting-number">
+                <span class="mobile-betting-label">숫자:</span>
+                <span class="mobile-betting-value">-</span>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
