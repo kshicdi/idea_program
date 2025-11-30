@@ -7,9 +7,8 @@ Flask를 사용하여 웹 애플리케이션을 제공합니다.
 
 from flask import Flask, send_from_directory
 import os
-from pathlib import Path
 
-# 현재 스크립트의 디렉토리를 기준으로 경로 설정
+# 현재 스크립트가 있는 디렉토리를 기준으로 경로 설정
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 # Flask 앱 초기화
